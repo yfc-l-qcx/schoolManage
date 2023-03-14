@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.school_manage.mapper.teacher.TeacherInfoDao">
+  <resultMap id="BaseResultMap" type="com.example.school_manage.model.teacher.TeacherInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="teacher_name" jdbcType="VARCHAR" property="teacherName" />
+    <result column="school_area" jdbcType="VARCHAR" property="schoolArea" />
+    <result column="grade_name" jdbcType="VARCHAR" property="gradeName" />
+    <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+    <result column="class_name" jdbcType="VARCHAR" property="className" />
+    <result column="subject_name" jdbcType="VARCHAR" property="subjectName" />
+    <result column="tel_name" jdbcType="VARCHAR" property="telName" />
+    <result column="Id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, teacher_name, school_area, grade_name, dept_name, class_name, subject_name, tel_name, 
+    Id_card, address
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from teacher_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByTeacherInfo" resultType="com.example.school_manage.model.teacher.TeacherInfo">
+    select * from teacher_info where id
+    <if test="className != null">
+      and class_name = #{className, jdbcType=VARCHAR}
+    </if>
+    <if test="schoolArea != null">
+      and school_area = #{schoolArea, jdbcType=VARCHAR}
+    </if>
+    <if test="deptName != null">
+      and dept_name = #{deptName, jdbcType=VARCHAR}
+    </if>
+    <if test="gradeName != null">
+      and grade_name = #{gradeName, jdbcType=VARCHAR}
+    </if>
+    <if test="teacherName != null">
+      and teacher_name = #{teacherName, jdbcType=VARCHAR}
+    </if>
+    limit #{pageNum}, #{pageSize}
+  </select>
+  <select id="selectAllCount" resultType="java.lang.Integer">
+    select count(*) from teacher_info;
+  </select>
+
+</mapper>

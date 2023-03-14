@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.school_manage.mapper.ZzClassQuantizationDao">
+  <resultMap id="BaseResultMap" type="com.example.school_manage.model.ZzClassQuantization">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="class_name" jdbcType="VARCHAR" property="className" />
+    <result column="class_discipline" jdbcType="DOUBLE" property="classDiscipline" />
+    <result column="class_gril_discipline" jdbcType="DOUBLE" property="classGrilDiscipline" />
+    <result column="class_man_discipline" jdbcType="DOUBLE" property="classDiscipline" />
+    <result column="class_health" jdbcType="DOUBLE" property="classHealth" />
+    <result column="class_ocsd" jdbcType="DOUBLE" property="classOcsd" />
+    <result column="class_gril_health" jdbcType="DOUBLE" property="classGrilHealth" />
+    <result column="class_man_health" jdbcType="DOUBLE" property="classManHealth" />
+    <result column="class_grasp" jdbcType="VARCHAR" property="classGrasp" />
+    <result column="class_spirit" jdbcType="VARCHAR" property="classSpirit" />
+    <result column="class_team" jdbcType="DOUBLE" property="classTeam" />
+    <result column="class_quantization" jdbcType="DOUBLE" property="classQuantization" />
+    <result column="class_ranking" jdbcType="INTEGER" property="classRanking" />
+    <result column="class_teacher" jdbcType="VARCHAR" property="classTeacher" />
+    <result column="class_remark" jdbcType="VARCHAR" property="classRemark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, class_name, class_discipline, class_gril_discipline, class_man_discipline, class_health,
+    class_ocsd, class_gril_health, class_man_health, class_grasp, class_spirit, class_team,
+    class_quantization, class_ranking, class_teacher, class_remark
+  </sql>
+
+    <select id="selectAllInfo" resultType="com.example.school_manage.model.ZzClassQuantization">
+    select * from zz_class_quantization
+  </select>
+    <select id="selectAllClass" resultType="com.example.school_manage.model.ZzClassQuantization">
+      select id, class_name, class_teacher from zz_class_quantization;
+    </select>
+  <select id="selectCertainInfo" resultType="java.lang.String">
+    select ${classTypeKey} from zz_class_quantization
+             where class_name = #{className}
+  </select>
+  <select id="selectClassCount" resultType="java.lang.Integer">
+    select count(*) from zz_class_quantization
+  </select>
+    <select id="selectByClassTeacher" resultType="java.lang.String">
+      select class_teacher from zz_class_quantization where class_name = #{className}
+    </select>
+
+
+    <update id="updateCertainInfo">
+    update zz_class_quantization
+    set ${classTypeKey} = #{points}
+    where class_name = #{className}
+  </update>
+  <update id="updateInitializeBJLH">
+    update zz_class_quantization
+    set class_discipline = #{classDiscipline}, class_gril_discipline = #{classGrilDiscipline},
+        class_man_discipline = #{classManDiscipline}, class_health = #{classHealth},
+        class_ocsd = #{classOcsd}, class_gril_health = #{classGrilHealth},
+        class_man_health = #{classManHealth}, class_grasp = #{classGrasp},
+        class_spirit = #{classSpirit}, class_team = #{classTeam}
+    where class_name = #{className}
+  </update>
+</mapper>

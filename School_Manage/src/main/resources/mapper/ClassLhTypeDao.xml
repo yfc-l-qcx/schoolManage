@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.school_manage.mapper.ClassLhTypeDao">
+  <resultMap id="BaseResultMap" type="com.example.school_manage.model.ClassLhType">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="class_type_key" jdbcType="VARCHAR" property="classTypeKey" />
+    <result column="class_type_value" jdbcType="VARCHAR" property="classTypeValue" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, class_type_key, class_type_value
+  </sql>
+  <select id="selectAllType" resultType="com.example.school_manage.model.ClassLhType">
+    select * from class_lh_type;
+  </select>
+    <select id="selectByClassTypeValue" resultType="java.lang.String">
+        select
+            class_type_key
+        from class_lh_type
+        where
+        class_type_value = #{classTypeValue,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

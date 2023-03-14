@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.school_manage.mapper.ZzClassLhDetailsDao">
+  <resultMap id="BaseResultMap" type="com.example.school_manage.model.ZzClassLhDetails">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="class_name" jdbcType="VARCHAR" property="className" />
+    <result column="class_teacher" jdbcType="VARCHAR" property="classTeacher" />
+    <result column="class_type" jdbcType="VARCHAR" property="classType" />
+    <result column="class_detail" jdbcType="VARCHAR" property="classDetail" />
+    <result column="class_date" jdbcType="DATE" property="classDate" />
+    <result column="class_week" jdbcType="VARCHAR" property="classWeek" />
+    <result column="class_points" jdbcType="DOUBLE" property="classPoints" />
+    <result column="class_image_path" jdbcType="VARCHAR" property="classImagePath" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, class_name, class_teacher, class_type, class_detail, class_date, class_week, 
+    class_points, class_image_path
+  </sql>
+  <select id="selectClassDetails" resultType="com.example.school_manage.model.ZzClassLhDetails">
+    select * from zz_class_lh_details where class_name = #{className} and class_type = #{classType}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from zz_class_lh_details
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectClassLhDetails" resultType="com.example.school_manage.model.ZzClassLhDetails">
+    select
+        zz.id,
+        zz.class_name,
+        zz.class_type,
+        zz.class_detail,
+        zz.class_teacher,
+        zz.class_points,
+        zz.class_image_path,
+        DATE_FORMAT(class_date,'%Y-%m-%d') as class_date  from zz_class_lh_details AS zz where
+          class_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+          <if test="className != ''">
+            AND class_name = #{className,jdbcType=VARCHAR}
+
+          </if>
+          <if test="classType != ''">
+            and  class_type = #{classType,jdbcType=VARCHAR}
+          </if>
+        order by class_date desc
+
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from zz_class_lh_details
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.school_manage.model.ZzClassLhDetails" useGeneratedKeys="true">
+    insert into zz_class_lh_details (class_name, class_teacher, class_type, 
+      class_detail, class_date, class_week, 
+      class_points)
+    values (#{className,jdbcType=VARCHAR}, #{classTeacher,jdbcType=VARCHAR}, #{classType,jdbcType=VARCHAR}, 
+      #{classDetail,jdbcType=VARCHAR}, #{classDate,jdbcType=TIMESTAMP}, #{classWeek,jdbcType=VARCHAR}, 
+      #{classPoints,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.school_manage.model.ZzClassLhDetails" useGeneratedKeys="true">
+    insert into zz_class_lh_details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="className != null">
+        class_name,
+      </if>
+      <if test="classTeacher != null">
+        class_teacher,
+      </if>
+      <if test="classType != null">
+        class_type,
+      </if>
+      <if test="classDetail != null">
+        class_detail,
+      </if>
+      <if test="classDate != null">
+        class_date,
+      </if>
+      <if test="classWeek != null">
+        class_week,
+      </if>
+      <if test="classPoints != null">
+        class_points,
+      </if>
+      <if test="classImagePath != null">
+        class_image_path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="className != null">
+        #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="classTeacher != null">
+        #{classTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="classType != null">
+        #{classType,jdbcType=VARCHAR},
+      </if>
+      <if test="classDetail != null">
+        #{classDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="classDate != null">
+        #{classDate,jdbcType=DATE},
+      </if>
+      <if test="classWeek != null">
+        #{classWeek,jdbcType=VARCHAR},
+      </if>
+      <if test="classPoints != null">
+        #{classPoints,jdbcType=INTEGER},
+      </if>
+      <if test="classImagePath != null">
+        #{classImagePath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.school_manage.model.ZzClassLhDetails">
+    update zz_class_lh_details
+    <set>
+      <if test="className != null">
+        class_name = #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="classTeacher != null">
+        class_teacher = #{classTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="classType != null">
+        class_type = #{classType,jdbcType=VARCHAR},
+      </if>
+      <if test="classDetail != null">
+        class_detail = #{classDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="classDate != null">
+        class_date = #{classDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="classWeek != null">
+        class_week = #{classWeek,jdbcType=VARCHAR},
+      </if>
+      <if test="classPoints != null">
+        class_points = #{classPoints,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.school_manage.model.ZzClassLhDetails">
+    update zz_class_lh_details
+    set class_name = #{className,jdbcType=VARCHAR},
+      class_teacher = #{classTeacher,jdbcType=VARCHAR},
+      class_type = #{classType,jdbcType=VARCHAR},
+      class_detail = #{classDetail,jdbcType=VARCHAR},
+      class_date = #{classDate,jdbcType=TIMESTAMP},
+      class_week = #{classWeek,jdbcType=VARCHAR},
+      class_points = #{classPoints,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+</mapper>
